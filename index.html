@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Campeonato Brasileiro</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.19/lodash.min.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <style>
+        .shield {
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="container">
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h3>Campeonato Brasileiro - Série A - 2020</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary" @click="createNewGame()">Novo jogo</button>
+            </div>
+        </div>
+
+        <form class="form-inline mt-4 mb-4" v-if="vision != 'table'">
+            <input type="text" class="form-control col-md-1 mr-sm-2" v-model="newGame.home.goals" id="team-1">
+            <label for="team-1" class="mr-sm-2">{{ newGame.home.team ? newGame.home.team.name : '' }}</label>
+            <img :src="newGame.home.team ? newGame.home.team.shield : ''" alt="" class="shield" />
+            <span class="mr-sm-2 ml-sm-2"> x </span>
+            <img :src="newGame.out.team ? newGame.out.team.shield : ''" alt="" class="shield mr-sm-2" />
+            <label for="team-2" class="mr-sm-2">{{ newGame.out.team ? newGame.out.team.name : '' }}</label>
+            <input type="text" class="form-control col-md-1" v-model="newGame.out.goals" id="team-2">
+            <button type="button" class="btn btn-primary ml-4" @click="endGame()">Fim de jogo</button>
+        </form>
+
+        <div class="box-table mt-4 mb-4">
+            <input type="text" class="form-control" v-model="search" placeholder="Digite o nome do seu time">
+            <table class="table table-striped mt-4 mb-4" v-if="vision == 'table'">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th v-for="(label, index) in order.labels">
+                            <a href="#" @click.prevent="orderSortDesc(index)">{{label | ucwords}}</a>
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr v-for="team in sortTeam">
+                        <td>
+                            <img :src="team.shield" alt="" class="shield"> {{ team.name | ucwords }}
+                        </td>
+                        <td>{{ team.points }}</td>
+                        <td>{{ team.goalsScored }}</td>
+                        <td>{{ team.goalsConceded }}</td>
+                        <td>{{ team | balance() }}</td>
+                    </tr>
+                </tbody>
+
+
+            </table>
+            <div v-if="sortTeam.length == 0">
+                Não encontramos o time digitado
+            </div>
+        </div>
+
+        <h3>Times classificados para libertadores</h3>
+        <ul>
+            <li v-for="team in liberatorsTeam">
+                <img :src="team.shield" alt="" class="shield"> {{team.name | ucwords}}
+            </li>
+        </ul>
+
+        <h3>Times rebaixados</h3>
+        <ul>
+            <li v-for="team in demotedTeam">
+                <img :src="team.shield" alt="" class="shield"> {{team.name | ucwords}}
+            </li>
+        </ul>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>
