@@ -7,7 +7,7 @@ Um projeto simples da escola de curso School of Net onde feito com VueJs onde é
 
   - [Link do curso VueJs](https://www.schoolofnet.com/curso/frontend/vuejs/iniciando-com-vuejs-2-rev3/)
   
-![](https://raw.githubusercontent.com/wander4747/sof-vue-campeonato-brasileiro/screen.gif)
+![screen](https://user-images.githubusercontent.com/6461792/90078230-92acc980-dcda-11ea-86b0-1d96786fb919.gif)
 
 
 ## Contatos
